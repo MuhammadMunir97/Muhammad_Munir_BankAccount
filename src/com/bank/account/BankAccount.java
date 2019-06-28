@@ -3,10 +3,10 @@ import java.util.Random;
 
 public class BankAccount {
 	private String accountNumber;
-	private double checkingBalance;
-	private double savingsBalance;
-	private static int  numOfAccounts;
-	private static double totalAmount;
+	private double checkingBalance = 0;
+	private double savingsBalance = 0;
+	private static int  numOfAccounts = 0;
+	private static double totalAmount = 0;
 	public enum checkOrSave {checking,saving};
 	
 	public BankAccount() {
@@ -34,7 +34,9 @@ public class BankAccount {
 	private String generateID() {
 		Random rand = new Random();
 		String obj = "";
-		obj += rand.nextInt(9);
+		for (int i =0 ; i < 10 ; i++) {
+			obj += rand.nextInt(9);
+		}
 		return obj;
 	}
 	
@@ -42,7 +44,18 @@ public class BankAccount {
 		deposit(check, t);
 		totalAmount += check;
 	}
-	public boolean withdrawMoney(double check, checkOrSave t) {
+	public String withdrawMoney(double check, checkOrSave t) {
+		String retStat = "";
+		boolean a = withdraw(check, t);
+		if (a == false) {
+			retStat = "Transaction incompelete, insufficient funds";
+		}
+		else {
+			retStat = "Transaction successfull";
+		}
+		return retStat;
+	}
+	private boolean withdraw(double check, checkOrSave t) {
 		boolean withdraw = false;
 		switch (t) {
 		case checking:
