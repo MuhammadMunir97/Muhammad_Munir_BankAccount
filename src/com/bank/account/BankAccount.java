@@ -1,14 +1,16 @@
 package com.bank.account;
 import java.util.Random;
 
+
+
+
 public class BankAccount {
 	private String accountNumber;
 	private double checkingBalance = 0;
 	private double savingsBalance = 0;
 	private static int  numOfAccounts = 0;
 	private static double totalAmount = 0;
-	public enum checkOrSave {checking,saving};
-	
+		
 	public BankAccount() {
 		numOfAccounts++;
 		accountNumber = generateID();		
@@ -51,7 +53,7 @@ public class BankAccount {
 			retStat = "Transaction incompelete, insufficient funds";
 		}
 		else {
-			retStat = "Transaction successfull";
+			retStat = "Transaction successfull" ;
 		}
 		return retStat;
 	}
@@ -59,15 +61,15 @@ public class BankAccount {
 		boolean withdraw = false;
 		switch (t) {
 		case checking:
-			if (check < checkingBalance)
-				withdraw =  false;
+			if (check > checkingBalance)
+				 withdraw =  false;
 				else {
 					deposit(-check, t);
 					withdraw =  true;
 				}
 			break;
 		case saving:
-			if (check < savingsBalance)
+			if (check > savingsBalance)
 				withdraw = false;
 			else
 			{
@@ -90,6 +92,4 @@ public class BankAccount {
 		}
 	}
 	
-
-
 }
