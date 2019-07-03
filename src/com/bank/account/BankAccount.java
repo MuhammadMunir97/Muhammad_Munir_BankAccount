@@ -1,5 +1,5 @@
 package com.bank.account;
-import java.util.Random;
+
 
 
 
@@ -11,9 +11,10 @@ public class BankAccount {
 	private static int  numOfAccounts = 0;
 	private static double totalAmount = 0;
 		
-	public BankAccount() {
-		numOfAccounts++;
-		accountNumber = generateID();		
+	public BankAccount() {};
+	public BankAccount(generateID accountgen) {
+		numOfAccounts++;		
+		accountNumber = accountgen.generatingID();
 	}
 	
 	// getters
@@ -33,63 +34,15 @@ public class BankAccount {
 		return numOfAccounts;
 	}
 	
-	private String generateID() {
-		Random rand = new Random();
-		String obj = "";
-		for (int i =0 ; i < 10 ; i++) {
-			obj += rand.nextInt(9);
-		}
-		return obj;
+
+	public void TransactionChecking(double money, Transaction process) {
+		totalAmount -= checkingBalance;
+		checkingBalance = process.processingMoney(money, checkingBalance);
+		totalAmount += checkingBalance;
 	}
-	
-	public void depositMoney(double check, checkOrSave t) {
-		deposit(check, t);
-		totalAmount += check;
+	public void TransactionSaving(double money, Transaction process) {
+		totalAmount -= savingsBalance;
+		savingsBalance = process.processingMoney(money, savingsBalance);
+		totalAmount += savingsBalance;
 	}
-	public String withdrawMoney(double check, checkOrSave t) {
-		String retStat = "";
-		boolean a = withdraw(check, t);
-		if (a == false) {
-			retStat = "Transaction incompelete, insufficient funds";
-		}
-		else {
-			retStat = "Transaction successfull" ;
-		}
-		return retStat;
-	}
-	private boolean withdraw(double check, checkOrSave t) {
-		boolean withdraw = false;
-		switch (t) {
-		case checking:
-			if (check > checkingBalance)
-				 withdraw =  false;
-				else {
-					deposit(-check, t);
-					withdraw =  true;
-				}
-			break;
-		case saving:
-			if (check > savingsBalance)
-				withdraw = false;
-			else
-			{
-				deposit(-check, t);
-				withdraw = true;
-			}
-			break;			
-		}
-		return withdraw;
-	}
-	
-	private void deposit(double check, checkOrSave s) {
-		switch (s){
-		case checking:
-			checkingBalance += check;
-			break;
-		case saving:
-			savingsBalance += check;	
-			break;
-		}
-	}
-	
 }
