@@ -13,6 +13,7 @@ public class BankAccountTest {
 		System.out.println("bob's current checking amount: "+ bob.getCheckingBalance());
 		System.out.println(bob.getAccountNumber());
 		System.out.println("total amount: " + BankAccount.getTotalAmount());
+		System.out.println("total number of accounts: " + BankAccount.getNumOfAccounts());
 	}
 	
 }
